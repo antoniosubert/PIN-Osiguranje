@@ -1,0 +1,53 @@
+.naslov {
+    color: rgb(7, 7, 7);
+    text-align: center;
+    margin-right: 10px;
+}
+
+input {
+    display: block;
+    position: center;
+    padding: 10px;
+    margin: 15px;
+    border-radius: 3px;
+}
+
+body {
+    background: url('../img/pozadina_index.jpg');
+}
+
+#logindiv {
+    margin: 0px auto;
+    margin-top: 10px;
+    width: 18%;
+    padding: 20px;
+}
+
+.naslov{
+    width: 150px;
+    padding: 10px;
+    margin-left: 55px;
+    border-radius: 8px;
+}
+
+#Login {
+    width: 150px;
+    padding: 10px;
+    margin-left: 55px;
+    border-radius: 8px;
+}
+
+#ZaboravljenaLozinka{
+    width: 150px;
+    padding: 10px;
+    margin-left: 55px;
+    margin-top: 15px;
+    border-radius: 8px;
+}
+
+.emailtext{
+    width: 230px;
+}
+.passtext{
+    width: 230px;
+}

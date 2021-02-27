@@ -1,0 +1,457 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Osiguranje</title>
+    <link rel="stylesheet" href="assets/plugins/bootstrap-3.3.7-dist/css/bootstrap.css">
+    <link href="assets/plugins/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel= "stylesheet" href= "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="shortcut icon" href="img/rad.png">
+</head>
+<body>
+    <button class="refresh" onclick="refresh()"></button>
+    <div>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <p class="navbar-brand"><img id="vsmti" border="0" src="img/logo_rac.png"></p>
+                </div>
+                <ul class="nav navbar-nav">
+                    <li><a href="index.html">Osiguranje</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="Login.html">Prijava</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div id="tablica" class="container">
+            <h1>Prikaz Klijenata</h1>
+            <div id="radovi-btns">
+                <span>
+                    <button class="btn btn-success" data-toggle="modal" data-target="#dodaj-klijenta"><span class="glyphicon glyphicon-plus"></span> Dodaj Klijenta</button>
+                </span>
+                <span>
+                    <button class="btn btn-info" data-toggle="modal" onclick="klijentiPoOsiguranju()"><span class="glyphicon glyphicon-user"></span> Klijenti po osiguranjima</button>
+                </span>
+                <span>
+                    <button class="btn btn-info" data-toggle="modal" onclick="IsteklaOsiguranja()"><span class="glyphicon glyphicon-user"></span> Produzi osiguranje</button>
+                </span>
+                <span>
+                    <button class="btn btn-success" data-toggle="modal" data-target="#modal-pretrazivanje"><span class="glyphicon glyphicon-search"></span> Pretraži klijente</button>
+                </span>
+            </div>
+        </div>
+        <div class="container">
+            <table id="TablicaKlijenta" class="table table-stripped">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Ime</th>
+                        <th scope="col">Prezime</th>
+                        <th scope="col">OIB</th>
+                        <th scope="col">Godina rođenja</th>
+                        <th>Dodaj osiguranje</th>
+                        <th>Ažuriraj</th>
+                        <th>Obriši</th>
+                    </tr>
+                </thead>
+                <tbody id="podaciKlijentTablice">
+                </tbody>
+            </table>
+        </div>
+        
+    </div>
+    <div class="modal fade" id="modal-pretrazivanje" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"></button>
+                    <form id="live-search" action="" class="styled" method="post">
+                        <fieldset>
+                            <h1>Pretraži</h1>
+                            <input type="text" class="text-input form-control" id="searchInput" placeholder="Klijent" />
+                        </fieldset>
+                    </form>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-stripped">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Ime</th>
+                                <th>Prezime</th>
+                                <th>OIB</th>
+                                <th>Godina rođenja</th>
+                                <th>Dodaj osiguranje</th>
+                                <th>Ažuriraj</th>
+                                <th>Obriši</th>
+                            </tr>
+                        </thead>
+                        <tbody id="TablicaPretrazivanje">
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Zatvori</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="dodaj-klijenta" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"></button>
+                    <h4 class="modal-title">Dodaj klijenta</h4>
+                </div>
+                <div class="modal-body"> 
+                    <div class="form-group">
+                        <label for="idKlijenta">Id</label>
+                        <input type="text" class="form-control" id="idKlijenta" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="Imeklijenta">Ime</label>
+                        <input class="form-control" type="text" id="Imeklijenta"></input>
+                    </div>
+                    <div class="form-group">
+                        <label for="Prezimeklijenta">Prezime</label>
+                        <input class="form-control" type="text" id="Prezimeklijenta"></input>
+                    </div>                   
+                    <div class="form-group">
+                        <label for="OIBklijenta">OIB</label>
+                        <input class="form-control" type="text" id="OIBklijenta"></input>
+                    </div>
+                    <div class="form-group">
+                        <label for="DatumRodenjaklijenta">Datum rođenja</label>
+                        <input class="form-control" data-provide="datepicker" id="DatumRodenjaklijenta"></input>
+                    </div>
+                </div>
+                <!-- <div class="form-group">
+                    <label>Tip osiguranja</label>
+                    <select class="form-control" id="TipDropdown" onchange="Odabir('TipDropdown')">
+                    </select>
+                </div> -->
+                <div class="modal-footer">
+                    <button  type="button" onclick="DodajKlijenta()" class="btn btn-success" data-dismiss="modal">Dodaj</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Odustani</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal fade" id="dodaj-osiguranje" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"></button>
+                    <h4 class="modal-title">Dodaj osiguranje</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="klijentidosig">Klijent</label>
+                        <input class="form-control" type="text" id="klijentidosig" disabled></input>
+                    </div>
+                    <div class="form-group">
+                        <label>Vrsta osiguranja</label>
+                        <select class="form-control" id="TipDropdownosig">
+                            <!-- onchange="Odabir('TipDropdownosig')" -->
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="datumOdosig">Od</label>
+                        <input class="form-control" data-provide="datepicker" id="datumOdosig"></input>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="datumDoosig">Do</label>
+                        <input class="form-control" data-provide="datepicker" id="datumDoosig"></input>
+                    </div>
+                    <div class="form-group">
+                        <label for="CijenaOsig">Cijena</label>
+                        <input class="form-control" type="text" id="CijenaOsig" disabled></input>
+                    </div>
+                </div>
+                <div    class="modal-footer">
+                    <!-- <button  type="button" id="TipkaDodajOsiguranje" class="btn btn-success" data-dismiss="modal">Dodaj</button> -->
+                    <button  type="button" id="TipkaInfo" class="btn btn-success" onclick="KojiJeBtn()" data-target="#dodatni-modal-auto" >Nastavi</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Odustani</button>
+                </div>
+            </div>
+            <div class="modal-content auti" id="dodatni-modal-auto">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"></button>
+                    <h4 class="modal-title">Dodatne informacije</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="godVozilo">Godište vozila</label>
+                        <input class="form-control" data-provide="datepicker" id="godVozilo"></input>
+                    </div>
+                    <div class="form-group">
+                        <label for="snagaVozilo">Snaga vozila</label>
+                        <input class="form-control" type="text" id="snagaVozilo"></input>
+                    </div>
+                    <div class="form-group">
+                        <label>Tip vozila</label>
+                        <select class="form-control" id="TipVozila" onchange="Odabir('TipVozila')">
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="TipkaIzracunajAuto" class="btn btn-primary" onclick="IzracunajCijenuAuto()">Izracunaj cijenu</button>
+                    <button type="button" id="TipkaDodajOsiguranjeAuto" class="btn btn-success" data-dismiss="modal" disabled>Dodaj</button>
+                </div>
+            </div>
+            <div class="modal-content stan" id="dodatni-modal-stan">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"></button>
+                    <h4 class="modal-title">Dodatne informacije</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="godIzgradnje">Godina izgradnje</label>
+                        <input class="form-control" data-provide="datepicker" id="godIzgradnje"></input>
+                    </div>
+                    <div class="form-group">
+                        <label for="povrsinaStan">Površina</label>
+                        <input class="form-control" type="text" id="povrsinaStan"></input>
+                    </div>
+                    <div class="form-group">
+                        <label>Tip stambene povrsine</label>
+                        <select class="form-control" id="TipStan" onchange="Odabir('TipStan')">
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="TipkaIzracunajStan" class="btn btn-primary" onclick="IzracunajCijenuStan()">Izracunaj cijenu</button>
+                    <button type="button" id="TipkaDodajOsiguranjeStan" class="btn btn-success" data-dismiss="modal" disabled>Dodaj</button>
+                </div>
+            </div>
+            <div class="modal-content zivot" id="dodatni-modal-zivot">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"></button>
+                    <h4 class="modal-title">Dodatne informacije</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Bolujete li od kakvih kroničnih bolesti?</label>
+                        <select class="form-control" id="kronBolest" onchange="Odabir('kronBolest')">
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="brojDjece">Broj djece</label>
+                        <input class="form-control" type="text" id="brojDjece"></input>
+                    </div>
+                    <div class="form-group">
+                        <label for="mjPlaca">Mjesečna primanja</label>
+                        <input class="form-control" type="text" id="mjPlaca"></input>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="TipkaIzracunajZivot" class="btn btn-primary" onclick="IzracunajCijenuZivot()">Izracunaj cijenu</button>
+                    <button type="button" id="TipkaDodajOsiguranjeZivot" class="btn btn-success" data-dismiss="modal" disabled>Dodaj</button>
+                </div>
+            </div>
+        </div>
+    </div>  
+    <div class="modal fade" id="tablica-po-osiguranjima" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"></button>
+                    <h4 class="modal-title">Ispis klijenata po osiguranjima</h4>
+                </div>
+                <div class="modal-body">
+                    <table id="TablicaPoOsiguranju" class="table table-stripped">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Ime</th>
+                                <th>Prezime</th>
+                                <th>Vrsta osiguranja</th>
+                                <th>OIB</th>
+                                <th>Cijena osiguranja</th>
+                                <th>Ažuriraj</th>
+                                <th>Obriši</th>
+                            </tr>
+                        </thead>
+                        <tbody id="podaciTablicePoOsiguranjima">
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Odustani</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="tablica-neaktivnih-osiguranja" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"></button>
+                    <h4 class="modal-title">Ispis isteklih osiguranja</h4>
+                </div>
+                <div class="modal-body">
+                    <table id="TablicaNeaktivOsiguranja" class="table table-stripped">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Ime</th>
+                                <th>Prezime</th>
+                                <th>Vrsta osiguranja</th>
+                                <th>Datum isteka</th>
+                                <th>Produži</th>
+                                <th>Obriši</th>
+                            </tr>
+                        </thead>
+                        <tbody id="podaciTabliceNeaktivOsiguranja">
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Odustani</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="azuriraj-klijenta" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"></button>
+                    <h4 class="modal-title">Ažuriraj klijenta</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="idKlijentaEdit">Id</label>
+                        <input type="text" class="form-control" id="idKlijentaEdit" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="ImeklijentaEdit">Ime</label>
+                        <input class="form-control" type="text" id="ImeklijentaEdit"></input>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="PrezimeklijentaEdit">Prezime</label>
+                        <input class="form-control" type="text" id="PrezimeklijentaEdit"></input>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="OIBklijentaEdit">OIB</label>
+                        <input class="form-control" type="text" id="OIBklijentaEdit" disabled></input>
+                    </div>
+                    <div class="form-group">
+                        <label for="DatumRodenjaklijentaEdit">Datum rođenja</label>
+                        <input class="form-control" data-provide="datepicker" id="DatumRodenjaklijentaEdit"></input>
+                    </div>
+                    
+                </div>
+                <!-- <div class="form-group">
+                    <label>Tip osiguranja</label>
+                    <select class="form-control" id="TipDropdown" onchange="Odabir('TipDropdown')">
+                    </select>
+                </div> -->
+                <div class="modal-footer">
+                    <button  type="button" id="ModalAzurirajKlijenta" class="btn btn-success" data-dismiss="modal">Dodaj</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Odustani</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="azuriraj-osiguranje" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"></button>
+                    <h4 class="modal-title">Ažuriraj osiguranje</h4>
+                </div>
+                <!-- <div class="modal-body">
+                    <div class="form-group">
+                        <label for="klijentidosigEdit">Klijent</label>
+                        <input class="form-control" type="text" id="klijentidosigEdit" disabled></input>
+                    </div> -->
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Vrsta osiguranja</label>
+                        <select class="form-control" id="TipDropdownosigEdit" onchange="Odabir('TipDropdownosigEdit')">
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="datumOdosigEdit">Od</label>
+                        <input class="form-control" data-provide="datepicker" id="datumOdosigEdit"></input>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="datumDoosigEdit">Do</label>
+                        <input class="form-control" data-provide="datepicker" id="datumDoosigEdit"></input>
+                    </div>
+                    <!-- <div class="form-group">
+                        <label for="CijenaOsigEdit">Cijena</label>
+                        <input class="form-control" type="text" id="CijenaOsigEdit" disabled></input>
+                    </div> -->
+                </div>
+                <div    class="modal-footer">
+                    <button  type="button" id="TipkaAzurirajOsiguranje" class="btn btn-success" data-dismiss="modal">Ažuriraj</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Odustani</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="produzi-osiguranje" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"></button>
+                    <h4 class="modal-title">Produzi osiguranje</h4>
+                </div>
+                <!-- <div class="modal-body">
+                    <div class="form-group">
+                        <label for="klijentidosigEdit">Klijent</label>
+                        <input class="form-control" type="text" id="klijentidosigEdit" disabled></input>
+                    </div> -->
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Vrsta osiguranja</label>
+                        <select class="form-control" id="TipDropdownosigExtend" onchange="Odabir('TipDropdownosigExtend')" disabled>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="datumOdosigExtend">Od</label>
+                        <input class="form-control" data-provide="datepicker" id="datumOdosigExtend"></input>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="datumDoosigExtend">Do</label>
+                        <input class="form-control" data-provide="datepicker" id="datumDoosigExtend"></input>
+                    </div>
+                </div>
+                <div    class="modal-footer">
+                    <button  type="button" id="TipkaAktivirajOsiguranje" class="btn btn-success" data-dismiss="modal">Aktiviraj</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Odustani</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<script src="https://www.gstatic.com/firebasejs/7.6.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.6.0/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.6.0/firebase-analytics.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.6.0/firebase-auth.js"></script>
+<script type="text/javascript" src="assets/plugins/jquery/jquery-3.2.1.min.js"></script>
+<script src="assets/plugins/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.6.0/firebase.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+<script src="js/bootstrap-datepicker.hr.min.js"></script>
+<script src="js/firebase-config.js"></script>
+<script src="js/FinalsRepository.js"></script>
+</body>
+</html>

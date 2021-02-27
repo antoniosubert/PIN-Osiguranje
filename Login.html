@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="assets/plugins/bootstrap-3.3.7-dist/css/bootstrap.css">
+    <link href="assets/plugins/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/login.css">
+    
+</head>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <p class="navbar-brand"><img id="vsmti" border="0" src="img/logo_rac.png"></p>
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a href="index.html">Osiguranje</a></li>
+            </ul>
+        </div>
+    </nav>
+        <div id="logindiv">
+            <h1 class="naslov"><b>Prijava</b></h1>
+            <input class="emailtext" id="email_field" type="email" placeholder="E-mail">
+            <input class="passtext" id="password_field" type="password" placeholder="Lozinka">
+            <p id="loginAlert" style="color:red; font-weight:bold;"></p>
+            <button type="button" id="Login" onclick="Login()" class=" loginBtn btn btn-success">Prijavi se</button>
+            <button id="ZaboravljenaLozinka" onclick="" type="button" class="btn btn-danger">Zaboravljena lozinka</button>
+        </div>
+        <script src="assets/plugins/jquery/jquery-3.2.1.min.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-analytics.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-firestore.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-database.js"></script>
+        <script src="js/Login.js"></script>
+    <script src="js/firebase-config.js"></script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Administracija</title>
+    
+    <link rel="stylesheet" href="assets/plugins/bootstrap-3.3.7-dist/css/bootstrap.css">
+    <link href="assets/plugins/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="shortcut icon" href="img/rad.png">
+</head>
+<body>
+    <div>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <p class="navbar-brand"><img id="vsmti" border="0" src="img/logo_rac.png"></p>
+                </div>
+                <ul class="nav navbar-nav">
+                    <li><a href="index.html">Osiguranje</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <button class="btn btn-primary-outline" onclick="Logout()" id="odjava"><span class="glyphicon glyphicon-log-out"></span>  Odjava</button>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    <div class="container aktivnost">
+        <h1>Povijest aktivnosti</h1>
+        <table id="povijestAktivnosti" class="table table-stripped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Radnja</th>
+                    <th>Datum i Vrijeme</th>
+                    <th>Naziv</th>
+                    <th>Obriši</th>
+                </tr>
+            </thead>
+            <tbody id="podaciGlavneTablice">
+            </tbody>
+        </table>
+    </div>
+
+    <button onclick="topFunction()" id="myBtn" title="Go to top"><img src="img/arrowUP.png" /></button>
+    <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-auth.js"></script>
+    <script src="assets/plugins/jquery/jquery-3.2.1.min.js"></script>
+    <script src="assets/plugins/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="assets/plugins/jquery/jquery-3.2.1.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-firestore.js"></script>
+    <script src="js/firebase-config.js"></script>
+    <script src="js/FinalsAdministrationRepository.js"></script>
+    <script src="js/Login.js"></script>
+</body>
+</html>
